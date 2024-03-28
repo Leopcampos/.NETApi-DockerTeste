@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  dockerteste.api:
+    container_name: DockerTeste
+    image: ${DOCKER_REGISTRY-}dockertesteapi
+    build:
+      context: .
+      dockerfile: DockerTeste.Api/Dockerfile
+    ports:
+      - "8081:80"
+    depends_on:
+      - SqlServerDB
+
+  SqlServerDB:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - SA_PASSWORD=123@Mudar
+      - ACCEPT_EULA=Y
+    volumes:
+      - c:\dados\volumes\mssql:/var/opt/mssql/data
+    ports:
+      - "1450:1433"
